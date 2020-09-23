@@ -22,18 +22,15 @@ contactForm.addEventListener("submit", submitForm);
 const newMessage = document.getElementById("newMessage");
 const wrapper = document.getElementById("wrapper");
 
-
 const messagesTable = document.getElementById("messagesTable");
 
 function showTabel() {
   console.log(177);
-
-
-
+  document.querySelector(".wrapper").style.display = "block";
+  document.querySelector("#messagesTable").style.display = "none";
 }
 
 newMessage.addEventListener("click", showTabel);
-
 
 const url = "https://us-central1-massageform-86827.cloudfunctions.net/messages";
 /* const url = "http://localhost:5001/massageform-86827/us-central1/messages"; */
@@ -130,7 +127,6 @@ const getMessages = async () => {
     const response = await fetch(url);
 
     if (response.ok) {
-
       messages = await response.json();
       console.table(messages);
       renderTable();
@@ -150,6 +146,7 @@ const renderTable = () => {
             <td>${message.name}</td>
             <td>${message.email}</td>
             <td>${message.phone}</td>
+            <td>${message.company}</td>
 
 
             <td id=${message.id} onclick="deletMessage(${message.id})">${deleteBtn}</td>
@@ -174,7 +171,7 @@ const deletMessage = async (userTabelCell) => {
 
   try {
     const response = await fetch(`${url}/${userTabelCell.id}`, {
-      method: "DELETE"
+      method: "DELETE",
     });
 
     if (response.ok) {
@@ -190,9 +187,6 @@ const deletMessage = async (userTabelCell) => {
   } catch (err) {
     throw err;
   }
-
-
 };
-
 
 document.addEventListener("load", getMessages());

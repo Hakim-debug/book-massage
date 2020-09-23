@@ -1,110 +1,98 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Welcome to Firebase Hosting</title>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
 
-  <body>
-    <div class="container">
-      <h1 class="brand"><span>Hakims</span><br />Massage</h1>
-      <button class="btn btn-default mb-1" id="newMessage">New Message</button>
-      <div class="wrapper">
-        <div class="company-info">
-          <h3>Hakims Massage AB</h3>
-          <ul>
-            <li><i class="fa fa-road"></i> Sturegatan 19</li>
-            <li><i class="fa fa-phone"></i> (+46) 70-220037</li>
-            <li><i class="fa fa-envelope"></i> hakims_massage@gmail.com</li>
-          </ul>
-        </div>
-        <div class="contact">
-          <h3>Boka Tid</h3>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome to Firebase Hosting</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-          <div class="alert"></div>
-
-          <!-- Validation -->
-          <form id="contactForm">
-            <p>
-              <label>Namn:</label>
-              <input type="text" name="name" id="name" required />
-            </p>
-            <p>
-              <label>Företag:</label>
-              <input type="text" name="company" id="company" />
-            </p>
-            <p>
-              <label>Mail Adress:</label>
-              <input type="email" name="email" id="email" required />
-            </p>
-            <p>
-              <label>Mobil Nummer:</label>
-              <input type="text" name="phone" id="phone" />
-            </p>
-            <p class="full">
-              <label>Meddelande</label>
-              <textarea
-                name="message"
-                id="message"
-                cols="30"
-                rows="10"
-              ></textarea>
-            </p>
-            <p class="full">
-              <button type="submit">Skicka</button>
-            </p>
-          </form>
-        </div>
+<body>
+  <div class="container">
+    <h1 class="brand"><span>Hakims</span><br />Massage</h1>
+    <button class="btn btn-default mb-1" id="newMessage">New Message</button>
+    <div class="wrapper">
+      <div class="company-info">
+        <h3>Hakims Massage AB</h3>
+        <ul>
+          <li><i class="fa fa-road"></i> Sturegatan 19</li>
+          <li><i class="fa fa-phone"></i> (+46) 70-220037</li>
+          <li><i class="fa fa-envelope"></i> hakims_massage@gmail.com</li>
+        </ul>
       </div>
-      <div id="messagesTable">
-        <table class="table">
-          <thead class="thead-light">
-            <tr>
-              <th scope="col">FirstName</th>
-              <th scope="col">Email</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody id="messagesBody"></tbody>
-        </table>
+      <div class="contact">
+        <h3>Make an appointment</h3>
+
+        <div class="alert"></div>
+
+        <!-- Validation -->
+        <form id="contactForm">
+          <p>
+            <label>Name:</label>
+            <input type="text" name="name" id="name" required />
+          </p>
+          <p>
+            <label>Company:</label>
+            <input type="text" name="company" id="company" required />
+          </p>
+          <p>
+            <label>Email:</label>
+            <input type="email" name="email" id="email" required />
+          </p>
+          <p>
+            <label>Phone Number:</label>
+            <input type="text" name="phone" id="phone" required />
+          </p>
+          <p class="full">
+            <label>Message:</label>
+            <textarea name="message" id="message" required cols="30" rows="10"></textarea>
+          </p>
+          <p class="full">
+            <button type="submit">Skicka</button>
+          </p>
+        </form>
       </div>
     </div>
+    <div id="messagesTable">
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">FirstName</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Company</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody id="messagesBody"></tbody>
+      </table>
+    </div>
+  </div>
 
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/7.20.0/firebase-app.js"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="/__/firebase/7.20.0/firebase-app.js"></script>
 
-    <!-- include only the Firebase features as you need -->
-    <script src="/__/firebase/7.7.0/firebase-auth.js"></script>
-    <script src="/__/firebase/7.7.0/firebase-firestore.js"></script>
-    <script src="/__/firebase/7.7.0/firebase-functions.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script src="/__/firebase/7.7.0/firebase-auth.js"></script>
+  <script src="/__/firebase/7.7.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/7.7.0/firebase-functions.js"></script>
 
-    <!-- Initialize Firebase -->
-    <script src="/__/firebase/init.js"></script>
+  <!-- Initialize Firebase -->
+  <script src="/__/firebase/init.js"></script>
 
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-    <script src="index.js"></script>
-  </body>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+  </script>
+  <script src="index.js"></script>
+</body>
+
 </html>
