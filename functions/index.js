@@ -6,8 +6,12 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 const app = express();
-app.use(cors());
-app.options('*', cors());
+
+app.use(cors({
+    origin: ["http://localhost:5000"]
+}));
+
+/* app.options('*', cors()); */
 /* app.use(cors({
     origin: true
 })); */
@@ -62,11 +66,12 @@ app.put("/:id", async (req, res) => {
 
 });
 
-app.delete("/:id", async (req, res) => {
+app.delete("/:id", async (request, response) => {
+    const userId = request.params.id;
+    const userCollectionRef = db.collection("messages");
+    const result = await userCollectionRef.doc(userId).delete();
 
-    await admin.firestore().collection("messages").doc(req.params.id).delete();
-
-    res.status(200).send();
-})
+    response.status(200).send(result);
+});
 
 exports.messages = functions.https.onRequest(app);

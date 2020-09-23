@@ -19,13 +19,24 @@ const dbRef = db.collection("messages");
 /* skicka funtionen */
 const contactForm = document.getElementById("contactForm");
 contactForm.addEventListener("submit", submitForm);
-
 const newMessage = document.getElementById("newMessage");
-//newMessage.addEventListener('click', messagesTable.style.display = "none");
+const wrapper = document.getElementById("wrapper");
+
 
 const messagesTable = document.getElementById("messagesTable");
 
+function showTabel() {
+  console.log(177);
+
+
+
+}
+
+newMessage.addEventListener("click", showTabel);
+
+
 const url = "https://us-central1-massageform-86827.cloudfunctions.net/messages";
+/* const url = "http://localhost:5001/massageform-86827/us-central1/messages"; */
 
 let messages = [];
 
@@ -63,7 +74,7 @@ function alertForm(message) {
     document.querySelector(".alert").style.display = "none";
   }, 3000);
 }
-
+//läser in objektet till firebase
 function readFirebase() {
   dbRef
     .get()
@@ -119,7 +130,9 @@ const getMessages = async () => {
     const response = await fetch(url);
 
     if (response.ok) {
+
       messages = await response.json();
+      console.table(messages);
       renderTable();
     } else {
       throw new Error(response.statusText);
@@ -139,7 +152,7 @@ const renderTable = () => {
             <td>${message.phone}</td>
 
 
-            <td id=${message.id} onclick="deletMessage"(${message.id})>${deleteBtn}</td>
+            <td id=${message.id} onclick="deletMessage(${message.id})">${deleteBtn}</td>
         </tr>`;
   });
 
@@ -152,20 +165,25 @@ const deleteBtn = `<button type="button" class="btn btn-outline-primary">
 </svg>
 </button>`;
 
-const deletMessage = async () => {
+const deletMessage = async (userTabelCell) => {
+  console.log(userTabelCell.id);
   //To Do: delete from firebase using fetch API
-  if (!message) {
+  if (!userTabelCell) {
     throw new Error("No user id found.");
   }
 
   try {
-    const response = await fetch(url + message, { method: "DELETE" });
+    const response = await fetch(`${url}/${userTabelCell.id}`, {
+      method: "DELETE"
+    });
 
     if (response.ok) {
+      alert("Deleted");
       // if everything went ok we filter out the user that was removed.
-      message = message.filter((user) => user.id !== messages);
+      messages = messages.filter((user) => user.id !== userTabelCell.id);
+      console.table(messages);
       renderTable();
-      showTableSection();
+      /*  showTableSection(); */
     } else {
       throw new Error(response.statusText);
     }
@@ -173,6 +191,8 @@ const deletMessage = async () => {
     throw err;
   }
 
-  alert("Deleted");
+
 };
+
+
 document.addEventListener("load", getMessages());
