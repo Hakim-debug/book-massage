@@ -145,8 +145,11 @@ ul {
   color: #333;
   font-family: sans-serif;
   line-height: 1.5;
-  max-width: 80%;
+  max-width: 100%;
   padding: 1rem 2rem;
+  display: block;
+
+
 
 
 }

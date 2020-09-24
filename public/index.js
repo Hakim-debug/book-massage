@@ -24,13 +24,19 @@ const wrapper = document.getElementById("wrapper");
 
 const messagesTable = document.getElementById("messagesTable");
 
-function showTabel() {
+function hiddeTabel() {
   console.log(177);
   document.querySelector(".wrapper").style.display = "block";
   document.querySelector("#messagesTable").style.display = "none";
 }
 
-newMessage.addEventListener("click", showTabel);
+function showTabel() {
+  document.querySelector(".wrapper").style.display = "none";
+  document.querySelector("#messagesTable").style.display = "block";
+
+}
+
+newMessage.addEventListener("click", hiddeTabel);
 
 const url = "https://us-central1-massageform-86827.cloudfunctions.net/messages";
 /* const url = "http://localhost:5001/massageform-86827/us-central1/messages"; */
@@ -38,9 +44,11 @@ const url = "https://us-central1-massageform-86827.cloudfunctions.net/messages";
 let messages = [];
 
 let messagesRef = db.collection("messages");
+
 /* Sumbit form */
 function submitForm(e) {
   e.preventDefault();
+  console.log(888);
 
   /* Alla värden */
   let name = getInputVal("name");
@@ -51,7 +59,14 @@ function submitForm(e) {
 
   /* Spara medellandet */
   addMessage(name, company, email, phone, message);
+  showTabel();
+  getMessages();
+
+
 }
+
+
+
 
 /* Futionen som tar värdet ifrån contactForm till Firebase */
 
@@ -114,9 +129,10 @@ async function addMessage(
       contactForm.reset();
       alertForm("Meddelandet skickat");
       messagesTable.style.display = "block";
-      ///messageForm.style.display = "none";
+      /* messagesTable.style.display = "none"; */
     } else {
       alertForm(response.message);
+
     }
   } catch (err) {
     alertForm(err.message);
@@ -149,7 +165,7 @@ const renderTable = () => {
             <td>${message.company}</td>
 
 
-            <td id=${message.id} onclick="deletMessage(${message.id})">${deleteBtn}</td>
+            <td id=${message.id} onclick=deletMessage(${message.id})>${deleteBtn}</td>
         </tr>`;
   });
 
@@ -163,7 +179,7 @@ const deleteBtn = `<button type="button" class="btn btn-outline-primary">
 </button>`;
 
 const deletMessage = async (userTabelCell) => {
-  console.log(userTabelCell.id);
+  console.log(userTabelCell);
   //To Do: delete from firebase using fetch API
   if (!userTabelCell) {
     throw new Error("No user id found.");
@@ -182,6 +198,7 @@ const deletMessage = async (userTabelCell) => {
       renderTable();
       /*  showTableSection(); */
     } else {
+      debugger;
       throw new Error(response.statusText);
     }
   } catch (err) {
