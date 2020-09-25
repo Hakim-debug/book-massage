@@ -16,26 +16,24 @@
 const db = firebase.firestore();
 const dbRef = db.collection("messages");
 
-/* skicka funtionen */
 const contactForm = document.getElementById("contactForm");
 contactForm.addEventListener("submit", submitForm);
 const newMessage = document.getElementById("newMessage");
 const wrapper = document.getElementById("wrapper");
 
 const messagesTable = document.getElementById("messagesTable");
-
+//Gömmer Tabellen när meedelandet är skickat
 function hiddeTabel() {
   console.log(177);
   document.querySelector(".wrapper").style.display = "block";
   document.querySelector("#messagesTable").style.display = "none";
 }
-
+//Vissar Tabellen
 function showTabel() {
   document.querySelector(".wrapper").style.display = "none";
   document.querySelector("#messagesTable").style.display = "block";
-
 }
-
+//Nytt meddeladet knappen
 newMessage.addEventListener("click", hiddeTabel);
 
 const url = "https://us-central1-massageform-86827.cloudfunctions.net/messages";
@@ -43,10 +41,10 @@ const url = "https://us-central1-massageform-86827.cloudfunctions.net/messages";
 
 let messages = [];
 
-let messagesRef = db.collection("messages");
+let messagesRef = db.collection("messages"); /* skicka funtionen */
 
 /* Sumbit form */
-function submitForm(e) {
+async function submitForm(e) {
   e.preventDefault();
   console.log(888);
 
@@ -58,23 +56,16 @@ function submitForm(e) {
   let message = getInputVal("message");
 
   /* Spara medellandet */
-  addMessage(name, company, email, phone, message);
+  await addMessage(name, company, email, phone, message);
   showTabel();
   getMessages();
-
-
 }
-
-
-
 
 /* Futionen som tar värdet ifrån contactForm till Firebase */
 
 function getInputVal(id) {
   return document.getElementById(id).value;
 }
-
-/* Spara meddelande till firebase firestore directly */
 
 function alertForm(message) {
   const alert = document.querySelector(".alert");
@@ -102,7 +93,7 @@ function readFirebase() {
       console.log("Error getting document:", error);
     });
 }
-
+/* Lägger meddelande till firebase firestore directly */
 async function addMessage(
   nameValue,
   companyValue,
@@ -132,12 +123,12 @@ async function addMessage(
       /* messagesTable.style.display = "none"; */
     } else {
       alertForm(response.message);
-
     }
   } catch (err) {
     alertForm(err.message);
   }
 }
+/* Spara meddelande till firebase firestore directly */
 const getMessages = async () => {
   try {
     const response = await fetch(url);
@@ -153,6 +144,7 @@ const getMessages = async () => {
     throw err;
   }
 };
+//
 const renderTable = () => {
   let tableRow = "";
   const messagesBody = document.getElementById("messagesBody");
@@ -163,7 +155,7 @@ const renderTable = () => {
             <td>${message.email}</td>
             <td>${message.phone}</td>
             <td>${message.company}</td>
-
+            <td>${message.message}</td>
 
             <td id=${message.id} onclick=deletMessage(${message.id})>${deleteBtn}</td>
         </tr>`;
@@ -171,6 +163,7 @@ const renderTable = () => {
 
   messagesBody.innerHTML = tableRow;
 };
+//Radera knappen
 const deleteBtn = `<button type="button" class="btn btn-outline-primary">
 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
@@ -178,6 +171,7 @@ const deleteBtn = `<button type="button" class="btn btn-outline-primary">
 </svg>
 </button>`;
 
+//Detta ska radera Medellandet i både i firebase och Tabelen
 const deletMessage = async (userTabelCell) => {
   console.log(userTabelCell);
   //To Do: delete from firebase using fetch API

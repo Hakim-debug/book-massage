@@ -68,7 +68,7 @@ app.put("/:id", async (req, res) => {
 
 app.delete("/:id", async (request, response) => {
     const userId = request.params.id;
-    const userCollectionRef = db.collection("messages");
+    const userCollectionRef = admin.firestore().collection("messages");
     const result = await userCollectionRef.doc(userId).delete();
 
     response.status(200).send(result);
